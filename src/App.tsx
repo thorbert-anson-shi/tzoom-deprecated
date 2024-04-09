@@ -20,15 +20,20 @@ function App() {
       // console.log("Input is false!");
     }
 
-    let highlighted =
-      document.getElementsByClassName("highlighted")[0].innerHTML;
+    let highlighted = document.getElementsByClassName(
+      "highlighted"
+    )[0] as HTMLElement;
 
     if (s.endsWith(" ")) {
-      if (s.trim() === highlighted) {
+      if (s.trim() === highlighted.innerHTML) {
         // If the user input is correct
+
+        highlighted.className = "correct";
         console.log("Nice");
       } else {
         // If the user input is incorrect
+
+        highlighted.className = "incorrect";
         console.log("wtf");
       }
 

@@ -7,15 +7,20 @@ interface TextInputProps {
 const TextInput: Component<TextInputProps> = (props) => {
   const [currentToken, setCurrentToken] = createSignal<string>("");
 
+  // handle inputs including spaces
   const handleInput = (s: string) => {
     setCurrentToken(s);
 
-    if (s.charAt(s.length - 1) === " ") {
+    console.log(currentToken());
+
+    // if user inputs space
+    if (s.endsWith(" ")) {
       setCurrentToken("");
-      console.log(currentToken());
     }
+
     props.changeHandler(s);
   };
+
   return (
     <div style={{ margin: "2rem", "border-radius": "2rem" }}>
       <textarea
@@ -24,6 +29,11 @@ const TextInput: Component<TextInputProps> = (props) => {
         rows="1"
         placeholder="Click here"
         onInput={(e) => handleInput(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+          }
+        }}
         value={currentToken()}
       ></textarea>
     </div>

@@ -1,8 +1,9 @@
 import "./App.css";
-import WordPanel from "./components/WordPanel";
-import apiService from "./api/apiService";
+import WordPanel from "../components/WordPanel";
+import apiService from "../api/apiService";
 import { createSignal, onMount } from "solid-js";
-import TextInput from "./components/TextInput";
+import TextInput from "../components/TextInput";
+import Timer from "../components/Timer";
 
 function App() {
   // Current index of the word; can be used for speed calculation
@@ -42,6 +43,10 @@ function App() {
     }
   };
 
+  const handleTestCompletion = () => {
+    window.open("/profile", "_self");
+  };
+
   onMount(() => {
     (async () => {
       setWords(await apiService.get(200));
@@ -53,6 +58,11 @@ function App() {
   return (
     <>
       <div class="test">
+        <Timer
+          ongoing={true}
+          seconds={20}
+          completionHandler={handleTestCompletion}
+        ></Timer>
         <WordPanel words={words()} currentIndex={index()} />
         <div>
           <TextInput changeHandler={handleTextChange}></TextInput>

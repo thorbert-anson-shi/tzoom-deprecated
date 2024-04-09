@@ -1,9 +1,19 @@
 /* @refresh reload */
-import { render } from 'solid-js/web'
+import { render } from "solid-js/web";
 
-import './index.css'
-import App from './App'
+import "./index.css";
+import { Route, Router } from "@solidjs/router";
+import { lazy } from "solid-js";
 
-const root = document.getElementById('root')
+const App = lazy(() => import("./pages/App"));
 
-render(() => <App />, root!)
+const root = document.getElementById("root");
+
+render(
+  () => (
+    <Router>
+      <Route path={"/"} component={App} />
+    </Router>
+  ),
+  root!
+);

@@ -1,13 +1,3 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: 900;
-  text-align: center;
-  font-size: 2rem;
-}
-
 .word-panel {
   border-radius: 2rem;
   height: 5rem;

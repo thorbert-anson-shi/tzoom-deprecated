@@ -15,7 +15,12 @@ function App() {
   // Current word being evaluated against input
   const [currentWord, setCurrentWord] = createSignal<string | undefined>();
 
+  const [start, setStart] = createSignal<boolean>(false);
+
   const handleTextChange = (s: string) => {
+    if (!start()) {
+      setStart(true);
+    }
     // If current word does not start with current token, return false
     if (!currentWord()?.startsWith(s.trim())) {
       // console.log("Input is false!");
@@ -59,14 +64,14 @@ function App() {
     <>
       <div class="test">
         <Timer
-          ongoing={true}
+          ongoing={start()}
           seconds={20}
           completionHandler={handleTestCompletion}
         ></Timer>
         <WordPanel words={words()} currentIndex={index()} />
         <div>
           <TextInput changeHandler={handleTextChange}></TextInput>
-          <a href="">
+          <a href="/test" target="_self">
             <button>Reset</button>
           </a>
         </div>

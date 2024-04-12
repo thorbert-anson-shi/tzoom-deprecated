@@ -1,4 +1,4 @@
-import { Component, createSignal } from "solid-js";
+import { Component, createEffect, createSignal } from "solid-js";
 
 interface TimerProps {
   ongoing: boolean;
@@ -9,16 +9,18 @@ interface TimerProps {
 const Timer: Component<TimerProps> = (props) => {
   const [remaining, setRemaining] = createSignal<number>(props.seconds);
 
-  if (props.ongoing == true) {
-    let intervalID: number = setInterval(() => {
-      setRemaining((prev) => prev - 1);
+  createEffect(() => {
+    if (props.ongoing == true) {
+      let intervalID: number = setInterval(() => {
+        setRemaining((prev) => prev - 1);
 
-      if (remaining() == 0) {
-        clearInterval(intervalID);
-        props.completionHandler();
-      }
-    }, 1000);
-  }
+        if (remaining() == 0) {
+          clearInterval(intervalID);
+          props.completionHandler();
+        }
+      }, 1000);
+    }
+  });
 
   return <div>{remaining()}</div>;
 };

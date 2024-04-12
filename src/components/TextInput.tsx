@@ -11,7 +11,7 @@ const TextInput: Component<TextInputProps> = (props) => {
   const handleInput = (s: string) => {
     setCurrentToken(s);
 
-    console.log(currentToken());
+    // console.log(currentToken());
 
     // if user inputs space
     if (s.endsWith(" ")) {

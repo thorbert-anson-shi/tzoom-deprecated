@@ -1,7 +1,7 @@
 import "./App.css";
 import WordPanel from "../components/WordPanel";
-import apiService from "../api/apiService";
-import { createSignal, onMount } from "solid-js";
+// import apiService from "../api/apiService";
+import { Suspense, createEffect, createSignal } from "solid-js";
 import TextInput from "../components/TextInput";
 import Timer from "../components/Timer";
 
@@ -52,12 +52,13 @@ function App() {
     window.open("/profile", "_self");
   };
 
-  onMount(() => {
-    (async () => {
-      setWords(await apiService.get(200));
-      console.log(words());
-      setCurrentWord(words()[index()]);
-    })();
+  let wordPanel: HTMLElement;
+
+  createEffect(() => {
+    // console.log(words());
+    setInterval(() => {
+      wordPanel.scrollBy({ top: 100 });
+    });
   });
 
   return (
@@ -68,7 +69,13 @@ function App() {
           seconds={20}
           completionHandler={handleTestCompletion}
         ></Timer>
-        <WordPanel words={words()} currentIndex={index()} />
+        <Suspense fallback={<span>this a span</span>}>
+          <WordPanel
+            ref={wordPanel}
+            currentIndex={index()}
+            wordSetter={setWords}
+          />
+        </Suspense>
         <div>
           <TextInput changeHandler={handleTextChange}></TextInput>
           <a href="/test" target="_self">
